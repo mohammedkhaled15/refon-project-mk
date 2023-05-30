@@ -1,19 +1,28 @@
 import { useEffect } from "react";
-import { privateRequest } from "../requests/requestMethods";
+import { privateRequest, publicDbApiRequest } from "../requests/requestMethods";
 import { useNavigate } from "react-router-dom";
-import {useLogAuth} from "../context/authContext";
+import { useLogAuth } from "../context/authContext";
 import setCookies from "../utils/setCookies";
 // import axios from "axios";
 
 const usePrivateRequest = () => {
   const { auth, setAuth } = useLogAuth();
   const navigate = useNavigate();
-  const access_token = document?.cookie?.split("=")[1];
+  // ***Refused Solution to get Access from Cookies
+  // const access_token = document?.cookie?.split("=")[1];
   // console.log("OldAccessToken:", access_token);
+  /***/
 
   useEffect(() => {
     const requestInterceptor = privateRequest.interceptors.request.use(
-      (config) => {
+      async (config) => {
+        //***Required Solution to get access token from db
+        const atRes = await publicDbApiRequest.post("/getaccess", {
+          telephone: auth.telephone,
+        });
+        const access_token = atRes.data.access_token;
+        console.log(access_token);
+        /*****/
         if (!config.headers["Authorization"]) {
           config.headers["Authorization"] = `Bearer ${access_token}`;
         }
@@ -56,7 +65,7 @@ const usePrivateRequest = () => {
       privateRequest.interceptors.request.eject(requestInterceptor);
       privateRequest.interceptors.response.eject(responseInterceptor);
     };
-  }, [access_token, auth, navigate, setAuth]);
+  }, [auth, navigate, setAuth]);
 
   return privateRequest;
 };

@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect , useContext } from 'react';
-import { useNavigate, useLocation} from 'react-router-dom';
+import { useState, useRef, useEffect, useContext } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { publicRequest } from "../requests/requestMethods"
 import axios from "axios"
 import setCookies from "../utils/setCookies"
@@ -44,7 +44,7 @@ const OTP = () => {
   }
 
   const handleKeyDown = (index, event) => {
-    
+
     if (event.key === 'ArrowRight' && index < otpInputRefs.current.length - 1) {
       const nextInput = otpInputRefs.current[index + 1];
       nextInput.focus();
@@ -61,43 +61,25 @@ const OTP = () => {
   }, [location]);
 
 
-  const [timer, setTimer] = useState(6)
-  const [disabled, setDisabled] = useState(true)
-
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimer(prev => prev - 1)
-    }, 1000)
-
-    if (timer === 0) {
-      setDisabled(false)
-      clearInterval(interval)
-    }
-    return () => clearInterval(interval)
-
-  }, [timer])
-
-
-  const handleGetOtp = async (e) => {
-    e.preventDefault()
-    try {
-      const res = await publicRequest.post(`/login`, {
-        ...data
-      })
-      if (res.code === 200) {
-        const interval = setInterval(() => {
-          setTimer(prev => prev - 1)
-        }, 1000)
-        if (timer === 0) {
-          setDisabled(false)
-          clearInterval(interval)
-        }
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // const handleGetOtp = async (e) => {
+  //   e.preventDefault()
+  //   try {
+  //     const res = await publicRequest.post(`/login`, {
+  //       ...data
+  //     })
+  //     if (res.code === 200) {
+  //       const interval = setInterval(() => {
+  //         setTimer(prev => prev - 1)
+  //       }, 1000)
+  //       if (timer === 0) {
+  //         setDisabled(false)
+  //         clearInterval(interval)
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   const handleFullLogin = async (e) => {
     e.preventDefault()
@@ -128,7 +110,7 @@ const OTP = () => {
   const getOtpString = () => {
     return otpValues.join("");
   }
-  
+
   return (
     <div className="entry__banner">
       <div className="otp__Card">
@@ -138,38 +120,38 @@ const OTP = () => {
         </div>
         <form className="otp__card__form" onSubmit={handleValidate}>
 
-        <div className='d-flex'>
-        {[0, 1, 2, 3].map((index) => (
-            <input
-              ref={(el) => (otpInputRefs.current[index] = el)}
-              className={`m-2 d-flex text-center form-control rounded ${error ? 'invalid-otp' : ''}`}
-              type="text"
-              key={index}
-              // maxLength="1"
-              onKeyDown={(e) => handleKeyDown(index, e)}
-              name="code"
-              required
-              value={otpValues && otpValues[index]}
-              onChange={(e)=> handleChange(e)}
-              
-            />
-          ))}
-        </div>
-        <div className="error mt-1 text-center">
-          {error && <p className="text-center">The activation code is not valid.</p>}
-        </div>
-        <div className="mt-4 text-center">
-          {loading ? (
-            <Loading />
-          ) : (
-            <button className="btn btn-danger px-2 validate" type='submit' value="Log in" onClick={(e) => handleFullLogin(e)} >
-              Validate
-            </button>
-          )}
-        </div>
+          <div className='d-flex'>
+            {[0, 1, 2, 3].map((index) => (
+              <input
+                ref={(el) => (otpInputRefs.current[index] = el)}
+                className={`m-2 d-flex text-center form-control rounded ${error ? 'invalid-otp' : ''}`}
+                type="text"
+                key={index}
+                // maxLength="1"
+                onKeyDown={(e) => handleKeyDown(index, e)}
+                name="code"
+                required
+                value={otpValues && otpValues[index]}
+                onChange={(e) => handleChange(e)}
+
+              />
+            ))}
+          </div>
+          <div className="error mt-1 text-center">
+            {error && <p className="text-center">The activation code is not valid.</p>}
+          </div>
+          <div className="mt-4 text-center">
+            {loading ? (
+              <Loading />
+            ) : (
+              <button className="btn btn-danger px-2 validate" type='submit' value="Log in" onClick={(e) => handleFullLogin(e)} >
+                Validate
+              </button>
+            )}
+          </div>
 
         </form>
-    
+
       </div>
     </div>
   );

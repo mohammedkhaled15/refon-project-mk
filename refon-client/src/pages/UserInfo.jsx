@@ -7,9 +7,9 @@ import { GrMail } from 'react-icons/gr';
 import '../styles/pages/UserInfo.scss'
 import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {FaUser , FaBirthdayCake} from 'react-icons/fa'
-import {BsFillTelephoneFill} from 'react-icons/bs'
-import {ImLocation2} from 'react-icons/im'
+import { FaUser, FaBirthdayCake } from 'react-icons/fa'
+import { BsFillTelephoneFill } from 'react-icons/bs'
+import { ImLocation2 } from 'react-icons/im'
 
 const UserInfo = () => {
   const privateRequest = usePrivateRequest()
@@ -20,9 +20,8 @@ const UserInfo = () => {
   const [expanded, setExpanded] = useState('panel1');
 
   const handleChange = (panel) => (event, newExpanded) => {
-      setExpanded(newExpanded ? panel : false);
-    };
-
+    setExpanded(newExpanded ? panel : false);
+  };
 
   useEffect(() => {
     let isMounted = true
@@ -36,9 +35,7 @@ const UserInfo = () => {
         navigate("/", { state: { from: location }, replace: true })
       }
     }
-
     getUserInfo()
-
     return () => {
       isMounted = false
       controller.abort()
@@ -52,8 +49,6 @@ const UserInfo = () => {
       <div className="section-title">
         <h2>User Info</h2>
       </div>
-    
-
 
       {/* {userInfo && Object.keys(userInfo).length > 0 && (
         <div className="user__info__content">
@@ -75,82 +70,82 @@ const UserInfo = () => {
       {
         userInfo && Object.keys(userInfo).length > 0 && (
           <div className="accordion__container">
-          <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
               <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
               >
-                  <Typography> <span><FaUser size={25}/></span> <span>User Name</span></Typography>
+                <Typography> <span><FaUser size={25} /></span> <span>User Name</span></Typography>
               </AccordionSummary>
               <AccordionDetails>
-                  <Typography >
+                <Typography >
                   {userInfo.user_details.full_name}
-                  </Typography>
+                </Typography>
               </AccordionDetails>
-          </Accordion>
-          <Accordion>
+            </Accordion>
+            <Accordion>
               <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
               >
-                  <Typography> <span><BsFillTelephoneFill size={25}/></span> <span>Telephone</span></Typography>
+                <Typography> <span><BsFillTelephoneFill size={25} /></span> <span>Telephone</span></Typography>
               </AccordionSummary>
               <AccordionDetails>
-                  <Typography>
+                <Typography>
                   {userInfo.user_details.telephone}
-                  </Typography>
+                </Typography>
               </AccordionDetails>
-          </Accordion>
-          <Accordion>
+            </Accordion>
+            <Accordion>
               <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
               >
-                  <Typography> <span><MdAlternateEmail size={25}/></span> <span>Email</span></Typography>
+                <Typography> <span><MdAlternateEmail size={25} /></span> <span>Email</span></Typography>
               </AccordionSummary>
               <AccordionDetails>
-                  <Typography>
+                <Typography>
                   {userInfo.user_details.email}
-                  </Typography>
+                </Typography>
               </AccordionDetails>
-          </Accordion>
-          <Accordion>
+            </Accordion>
+            <Accordion>
               <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
               >
-                  <Typography> <span><FaBirthdayCake size={25}/></span> <span>Birthday</span></Typography>
+                <Typography> <span><FaBirthdayCake size={25} /></span> <span>Birthday</span></Typography>
               </AccordionSummary>
               <AccordionDetails>
-                  <Typography>
+                <Typography>
                   {userInfo.user_details.birth_date}
-                  </Typography>
+                </Typography>
               </AccordionDetails>
-          </Accordion>
-          <Accordion>
+            </Accordion>
+            <Accordion>
               <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
               >
-                  <Typography> <span><ImLocation2 size={25}/></span> <span>Region</span></Typography>
+                <Typography> <span><ImLocation2 size={25} /></span> <span>Region</span></Typography>
               </AccordionSummary>
               <AccordionDetails>
-                  <Typography>
-                        {userInfo.user_details.nationality_name}
-                  </Typography>
+                <Typography>
+                  {userInfo.user_details.nationality_name}
+                </Typography>
               </AccordionDetails>
-          </Accordion>
-          
-          
-      </div>
+            </Accordion>
+
+
+          </div>
         )
       }
-   
+
     </div>
   )
 }
