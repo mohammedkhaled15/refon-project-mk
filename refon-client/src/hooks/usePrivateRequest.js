@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { privateRequest, publicDbApiRequest } from "../requests/requestMethods";
 import { useNavigate } from "react-router-dom";
 import { useLogAuth } from "../context/authContext";
-import setCookies from "../utils/setCookies";
+import setCookies from "../utils/manageCookie";
+import { getCookies } from "../utils/manageCookie";
 // import axios from "axios";
 
 const usePrivateRequest = () => {
@@ -13,13 +14,17 @@ const usePrivateRequest = () => {
   // console.log("OldAccessToken:", access_token);
   /***/
 
+  /**Depend on  cookies in request to presist data */
+  const telephone = getCookies("telephone");
+
   useEffect(() => {
     const requestInterceptor = privateRequest.interceptors.request.use(
       async (config) => {
         //***Required Solution to get access token from db
         const atRes = await publicDbApiRequest.post("/getaccess", {
-          telephone: auth.telephone,
+          telephone,
         });
+        console.log(atRes);
         const access_token = atRes.data.access_token;
         /*****/
         if (!config.headers["Authorization"]) {

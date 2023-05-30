@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { publicRequest } from "../requests/requestMethods"
 import axios from "axios"
-import setCookies from "../utils/setCookies"
+import setCookies from "../utils/manageCookie"
 import { useLogAuth } from '../context/authContext';
 import { AppContext } from "../App";
 import { BiError } from 'react-icons/bi';
@@ -81,7 +81,7 @@ const OTP = () => {
         const serverAccessToken = response.data.authData.serverAccessToken;
         const tokenMatch = document.cookie.match(/serverAccessToken=([^;]+)/);
         if (!tokenMatch) {
-          setCookies(serverAccessToken, 24 * 60 * 60 * 1000)
+          setCookies("serverAccessToken", serverAccessToken, 24 * 60 * 60 * 1000)
         }
         navigate("/userinfo")
       }
@@ -109,7 +109,7 @@ const OTP = () => {
                 className={`m-2 d-flex text-center form-control rounded ${error ? 'invalid-otp' : ''}`}
                 type="text"
                 key={index}
-                // maxLength="1"
+                maxLength="1"
                 onKeyDown={(e) => handleKeyDown(index, e)}
                 name="code"
                 required

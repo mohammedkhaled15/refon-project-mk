@@ -5,6 +5,7 @@ import { BsFillTelephoneFill } from 'react-icons/bs';
 import '../styles/pages/Login.scss'
 import { publicRequest } from "../requests/requestMethods"
 import { AppContext } from "../App";
+import setCookies from "../utils/manageCookie";
 
 const Login = () => {
   const { setAuth } = useLogAuth();
@@ -27,6 +28,7 @@ const Login = () => {
           console.log('API Response:', response);
           setAuth({ phoneNumber: data.telephone });
           navigate('/otp', { state: { telephone: data.telephone } });
+          setCookies("telephone", data.telephone, 24 * 60 * 60 * 1000)
         }
 
       } catch (error) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import { FaClipboardList } from 'react-icons/fa';
-import { BsInfoCircle ,BsFillBellFill} from 'react-icons/bs';
+import { BsInfoCircle, BsFillBellFill } from 'react-icons/bs';
 import { MdFavorite } from 'react-icons/md';
 import { ImExit } from 'react-icons/im'
 import { BiMenuAltRight } from 'react-icons/bi'
@@ -45,11 +45,12 @@ const Sidebar = () => {
   const handleLogout = (e) => {
     e.preventDefault();
     // Remove the access_token from cookies
-    document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'serverAccessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'telephone=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 
     // Navigate to the login page
-    window.location.reload();
     navigate('/');
+    window.location.reload();
   };
   const imageSize = `${isOpen ? "100px" : "30px"}`;
   const active = `${isOpen ? "active" : ""}`;
@@ -67,24 +68,24 @@ const Sidebar = () => {
       </div>
       <ul className='sidebar__list'>
         <li>
-            <span>
+          <span>
             <Link to="/userinfo"><BsInfoCircle size={30} /></Link>
-            </span>
-            <Link to="/userinfo" style={{ display: isOpen ? "block" : "none" }}>User Info</Link>
+          </span>
+          <Link to="/userinfo" style={{ display: isOpen ? "block" : "none" }}>User Info</Link>
         </li>
         <li>
           <span className='d-flex justify-content-center'>
             <Link to="/userorders"><FaClipboardList size={30} /></Link>
-            </span>
-            <Link to="/userorders" style={{ display: isOpen ? "block" : "none" }}>User Orders</Link>
+          </span>
+          <Link to="/userorders" style={{ display: isOpen ? "block" : "none" }}>User Orders</Link>
         </li>
         <li>
           <span className='d-flex justify-content-center'>
             <Link to="/*"><BsFillBellFill size={30} /></Link>
-            </span>
-            <Link to="/*" style={{ display: isOpen ? "block" : "none" }}>Offers</Link>
+          </span>
+          <Link to="/*" style={{ display: isOpen ? "block" : "none" }}>Offers</Link>
         </li>
-    
+
         <li onClick={handleLogout}>
           <span><ImExit size={30} /></span>
           <a href="" style={{ display: isOpen ? 'block' : 'none' }} >
