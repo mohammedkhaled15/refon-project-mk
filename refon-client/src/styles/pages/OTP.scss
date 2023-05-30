@@ -1,0 +1,140 @@
+.entry__banner{
+    background: linear-gradient(180deg, rgba(154, 154, 154, 0.64) 7.64%, rgba(118, 118, 118, 0.646963) 35.42%, rgba(83, 86, 91, 0.69) 61.98%, rgba(17, 24, 39, 0.56) 99.48%),url('/bg-1-1.jpg') ;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .otp__Card{
+    width: 90vw;
+    // max-height: 300px;
+    background: rgba(17, 24, 39, 0.53);
+    box-shadow: 0px 8px 6px -5px rgba(0, 0, 0, 0.25);
+    padding: 30px 20px;
+    margin-inline: 10px;
+   
+}
+
+.otp__card__header {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    h2{
+        font-size: 16px;
+        color: #fff;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+    .opt__Card__confirm-text{
+        text-align: center;
+        font-size: 12px;
+        color: #b1b1b1;
+    }
+}
+
+
+.otp__card__form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+     input {
+        width: 40px;
+        height: 40px
+    }
+    
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        margin: 0
+    }
+    
+}
+.error{
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg{
+        padding-right: 5px;
+    }
+}
+
+
+.otp-card{
+    display: flex;
+    flex-direction: column;
+}
+
+
+// ====================== Responsive Design in different Screen starting from small to large
+
+
+
+@media screen and (min-width: 470px) {
+    .otp__Card{
+        max-width: 70vw;
+    }
+    .otp__card__header {
+        h2{
+            font-size: 18px;
+        }
+        .opt__Card__confirm-text{
+            font-size: 14px;
+        }
+    }
+
+    .otp__card__form{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .inputs input {
+            width: 35px;
+            height: 35px
+        }
+    }
+
+
+}
+@media screen and (min-width: 768px) {
+    .otp__Card{
+        width: 500px;
+    }
+    .otp__card__form{
+        flex-direction: column;
+        .inputs input {
+            width: 40px;
+            height: 40px
+        }
+    }
+}
+@media screen and (min-width: 1070px) {
+    .otp__card__form{
+        flex-direction: column;
+    }
+    .otp__card__header {
+        h2{
+            font-size: 22px;
+        }
+    }
+    .otp__Card{
+        min-width: 600px;
+        padding: 40px 30px;
+    }
+   
+}
+
+
+// @media screen and (min-width: 1500px) {
+
+    
+// }
+

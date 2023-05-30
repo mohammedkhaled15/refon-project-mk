@@ -1,0 +1,14 @@
+
+
+.MuiPaper-root{
+    width: 80% !important;   
+    margin: 0 auto; 
+    @media screen and (min-width:1200px){
+        width: 70% !important;
+        
+    }
+    @media screen and (max-width:600px){
+        width: 90% !important;
+        margin: 0 auto;
+    }
+}

@@ -1,0 +1,125 @@
+.login{
+    background: linear-gradient(180deg, rgba(154, 154, 154, 0.64) 7.64%, rgba(118, 118, 118, 0.646963) 35.42%, rgba(83, 86, 91, 0.69) 61.98%, rgba(17, 24, 39, 0.56) 99.48%),url('/bg.jpg') ;
+   // background-image: url('/assets/bg-1-1.jpg');
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    header{
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+        align-items: flex-start;
+        position: fixed;
+        top: 30px;
+        margin: 0 60px;
+    }
+}
+
+.login__Card{
+    min-width: 80vw;
+    max-height: 300px;
+    background: rgba(17, 24, 39, 0.53);
+    box-shadow: 0px 8px 6px -5px rgba(0, 0, 0, 0.25);
+    padding: 30px 20px;
+    margin-inline: 10px;
+}
+
+.login__card__image{
+    display: flex;
+    justify-content: center;
+    
+    img{
+        width: 150px;
+        display: block;
+    }
+}
+
+
+.login__Card__form{
+    margin: 20px 0;
+    .input-group-text{
+        background: rgba(154, 154, 154, 0.5);
+        border: none;
+       
+    }
+    .form-control:focus {
+        outline: none !important;
+        border-color: #BEBEBE !important;
+    }
+    .input-group-text::placeholder{
+        font-size: 12px !important;
+    }
+}
+
+.login__Card__text{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    color: #fff;
+
+    a{
+        font-weight: 700;
+        color: #fff;
+    }
+}
+
+.error{
+    color: red;
+    display: flex;
+    align-items: center;
+    svg{
+        padding-right: 5px;
+    }
+}
+
+
+
+// ====================== Responsive Design in different Screen starting from small to large
+
+@media screen and (min-width: 570px) {
+    .login__Card{
+        min-width: 60vw;
+    }
+}
+@media screen and (min-width: 768px) {
+    .login__Card{
+        min-width: 500px;
+    }
+}
+@media screen and (min-width: 1070px) {
+    .login__Card{
+        min-width: 600px;
+        padding: 40px 30px;
+    }
+    .login__card__image{
+        img{
+            width: 260px;
+        }
+    }
+    .login__Card__form{
+        margin: 15px 0;
+        .form-control{
+                font-size: 18px !important;
+                padding: 10px 0;
+        }
+        input{
+            padding-left: 10px !important;
+        }
+        button{
+            font-size: 20px;
+        }
+    }
+}
+
+
+// @media screen and (min-width: 1500px) {
+
+    
+// }
+

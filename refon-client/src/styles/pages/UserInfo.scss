@@ -1,0 +1,45 @@
+
+.user__info__content{
+   
+    .user-info__card{
+        display: flex;
+        align-items: center;
+        margin-block: 25px;
+        p{
+            margin: 0px 10px;
+            font-size: 24px;
+        }
+    }
+}
+
+@media screen and (min-width: 1200px){
+    .user__info{
+        font-size: 18px;
+       
+        p svg{
+            font-size: 30px;
+        }
+    }
+}
+.MuiTypography-root{
+    display: flex;
+    align-items: center;
+    span{
+        margin-inline: 10px;
+    }
+}
+
+
+.accordion__container{
+    width: 95%;
+    margin: auto;
+    margin-right: 0px ;
+    @media screen and (min-width: 600px){
+        width: 70%;
+        margin-right: 40px ;
+    }
+    @media screen and (min-width: 1200px){
+        width: 80%;
+        margin-right: 40px ;
+    }
+}
