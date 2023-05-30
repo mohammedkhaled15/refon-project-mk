@@ -52,22 +52,16 @@ const OTP = () => {
       const previousInput = otpInputRefs.current[index - 1];
       previousInput.focus();
     }
-
-    // const res = otpInputRefs.current.map(el => el.value)
-    // setOTPValues()
-    // console.log(res.join("").toString())
   };
 
   const handleChange = () => {
     const res = otpInputRefs.current.map(el => el.value)
     setOTPValues(res.join("").toString())
   }
-  console.log(otpValues)
 
   useEffect(() => {
     const firstInput = otpInputRefs.current[0];
     firstInput.focus();
-
   }, [location]);
 
   const handleFullLogin = async (e) => {
@@ -79,14 +73,16 @@ const OTP = () => {
         const { access_token, name, telephone } = res.data.data
         //***Login Request => saving data to db {telephone, name, accesstoken} => generate new access token and
         // save it to the cookies to use it 
-        await axios.post("http://localhost:5000/api/updatedb", { access_token, name, telephone })
-        setAuth({ ...res.data.data })
+        const response = await axios.post("http://localhost:5000/api/updatedb", { access_token, name, telephone })
+        console.log(response)
+        setAuth({ ...response.data.authData })
         /**Canceling saving grabbed token to cookies and instead we fetch it from db with axios interceptors in hooks */
-        // const accessToken = res.data.data.access_token;
-        // const tokenMatch = document.cookie.match(/access_token=([^;]+)/);
-        // if (!tokenMatch) {
-        //   setCookies(accessToken, 24 * 60 * 60 * 1000)
-        // }
+        /**but we save the token henerated by our server and save it to cookies */
+        const serverAccessToken = response.data.authData.serverAccessToken;
+        const tokenMatch = document.cookie.match(/serverAccessToken=([^;]+)/);
+        if (!tokenMatch) {
+          setCookies(serverAccessToken, 24 * 60 * 60 * 1000)
+        }
         navigate("/userinfo")
       }
       // console.log(res)
@@ -95,13 +91,6 @@ const OTP = () => {
       console.log(error)
     }
   }
-
-  // console.log(otpInputRefs.current)
-  // useEffect(() => {
-  //   const res = otpInputRefs.current.map(el => el.value)
-  //   console.log(res.join(""))
-  // }, [otpInputRefs])
-
 
 
   return (
