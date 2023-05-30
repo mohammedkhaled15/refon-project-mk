@@ -1,4 +1,4 @@
-import { useState , useContext } from "react"
+import { useState, useContext } from "react"
 import { useLogAuth } from "../context/authContext"
 import { useNavigate, useLocation } from 'react-router-dom';
 import { BsFillTelephoneFill } from 'react-icons/bs';
@@ -8,7 +8,7 @@ import { AppContext } from "../App";
 
 const Login = () => {
   const { setAuth } = useLogAuth();
-  const { handleChange, data } = useContext(AppContext) ;
+  const { handleChange, data } = useContext(AppContext);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -23,9 +23,11 @@ const Login = () => {
     if (isValidNumber) {
       try {
         const response = await publicRequest.post(`/login`, { telephone: data.telephone })
-        console.log('API Response:', response);
-        setAuth({ phoneNumber: data.telephone });
-        navigate('/otp', { state: { telephone: data.telephone } });
+        if (response.status === 200) {
+          console.log('API Response:', response);
+          setAuth({ phoneNumber: data.telephone });
+          navigate('/otp', { state: { telephone: data.telephone } });
+        }
 
       } catch (error) {
         // Handle API errors
@@ -61,7 +63,7 @@ const Login = () => {
               // value={phoneNumber}
               onChange={(e) => handleChange(e)}
               name="telephone"
-              
+
             />
             <button type="submit" className="btn btn-secondary">
               Submit

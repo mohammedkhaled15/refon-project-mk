@@ -21,7 +21,6 @@ const usePrivateRequest = () => {
           telephone: auth.telephone,
         });
         const access_token = atRes.data.access_token;
-        console.log(access_token);
         /*****/
         if (!config.headers["Authorization"]) {
           config.headers["Authorization"] = `Bearer ${access_token}`;

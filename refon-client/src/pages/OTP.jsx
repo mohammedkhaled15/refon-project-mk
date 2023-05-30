@@ -20,7 +20,7 @@ function App() {
 }
 
 const OTP = () => {
-  const { handleChange, data } = useContext(AppContext)
+  const { data } = useContext(AppContext)
   const { setAuth } = useLogAuth()
   const otpInputRefs = useRef([]);
   const [loading, setLoading] = useState(false);
@@ -52,7 +52,17 @@ const OTP = () => {
       const previousInput = otpInputRefs.current[index - 1];
       previousInput.focus();
     }
+
+    // const res = otpInputRefs.current.map(el => el.value)
+    // setOTPValues()
+    // console.log(res.join("").toString())
   };
+
+  const handleChange = () => {
+    const res = otpInputRefs.current.map(el => el.value)
+    setOTPValues(res.join("").toString())
+  }
+  console.log(otpValues)
 
   useEffect(() => {
     const firstInput = otpInputRefs.current[0];
@@ -60,42 +70,23 @@ const OTP = () => {
 
   }, [location]);
 
-
-  // const handleGetOtp = async (e) => {
-  //   e.preventDefault()
-  //   try {
-  //     const res = await publicRequest.post(`/login`, {
-  //       ...data
-  //     })
-  //     if (res.code === 200) {
-  //       const interval = setInterval(() => {
-  //         setTimer(prev => prev - 1)
-  //       }, 1000)
-  //       if (timer === 0) {
-  //         setDisabled(false)
-  //         clearInterval(interval)
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
   const handleFullLogin = async (e) => {
     e.preventDefault()
     try {
-      const res = await publicRequest.post(`/check/code`, {
-        ...data
-      })
+      const res = await publicRequest.post(`/check/code`,
+        { ...data, code: otpValues })
       if (res.status === 200) {
         const { access_token, name, telephone } = res.data.data
-        const dbUpdate = await axios.post("http://localhost:5000/api/updatedb", { access_token, name, telephone })
-        const accessToken = res.data.data.access_token;
+        //***Login Request => saving data to db {telephone, name, accesstoken} => generate new access token and
+        // save it to the cookies to use it 
+        await axios.post("http://localhost:5000/api/updatedb", { access_token, name, telephone })
         setAuth({ ...res.data.data })
-        const tokenMatch = document.cookie.match(/access_token=([^;]+)/);
-        if (!tokenMatch) {
-          setCookies(accessToken, 24 * 60 * 60 * 1000)
-        }
+        /**Canceling saving grabbed token to cookies and instead we fetch it from db with axios interceptors in hooks */
+        // const accessToken = res.data.data.access_token;
+        // const tokenMatch = document.cookie.match(/access_token=([^;]+)/);
+        // if (!tokenMatch) {
+        //   setCookies(accessToken, 24 * 60 * 60 * 1000)
+        // }
         navigate("/userinfo")
       }
       // console.log(res)
@@ -105,11 +96,13 @@ const OTP = () => {
     }
   }
 
+  // console.log(otpInputRefs.current)
+  // useEffect(() => {
+  //   const res = otpInputRefs.current.map(el => el.value)
+  //   console.log(res.join(""))
+  // }, [otpInputRefs])
 
 
-  const getOtpString = () => {
-    return otpValues.join("");
-  }
 
   return (
     <div className="entry__banner">
@@ -131,9 +124,7 @@ const OTP = () => {
                 onKeyDown={(e) => handleKeyDown(index, e)}
                 name="code"
                 required
-                value={otpValues && otpValues[index]}
-                onChange={(e) => handleChange(e)}
-
+                onChange={handleChange}
               />
             ))}
           </div>
