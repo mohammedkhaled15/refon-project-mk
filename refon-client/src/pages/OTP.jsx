@@ -8,6 +8,7 @@ import { AppContext } from "../App";
 import { BiError } from 'react-icons/bi';
 import '../styles/pages/OTP.scss'
 import OTPInput, { ResendOTP } from "otp-input-react";
+import { publicDbApiRequest } from '../requests/requestMethods';
 
 function App() {
   const [OTP, setOTP] = useState("");
@@ -69,11 +70,11 @@ const OTP = () => {
     try {
       // const res = await publicRequest.post(`/check/code`,
       //   { ...data, code: otpValues })
-      const { access_token, name, telephone } = res.data.data
+      // const { access_token, name, telephone } = res.data.data
       //***Login Request => saving data to db {telephone, name, accesstoken} => generate new access token and
       // save it to the cookies to use it 
-      const response = await axios.post("http://localhost:5000/api/updatedb",
-        { ...data, code: otpValues, access_token, name })
+      const response = await publicDbApiRequest.post("/updatedb",
+        { ...data, code: otpValues })
       console.log(response)
       setAuth({ ...response.data.authData })
       /**Canceling saving grabbed token to cookies and instead we fetch it from db with axios interceptors in hooks */
