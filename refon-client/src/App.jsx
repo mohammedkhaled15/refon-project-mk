@@ -13,8 +13,6 @@ export const AppContext = createContext()
 const App = () => {
 
   const [data, setData] = useState({})
-  const { auth } = useLogAuth()
-  console.log(auth)
 
   const handleChange = (e) => {
     setData(prev => { return { ...prev, [e.target.name]: e.target.value } })

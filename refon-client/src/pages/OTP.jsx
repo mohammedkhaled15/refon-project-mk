@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { publicRequest } from "../requests/requestMethods"
-import axios from "axios"
-import setCookies from "../utils/manageCookie"
+// import { publicRequest } from "../requests/requestMethods"
+// import axios from "axios"
+import { setCookies } from "../utils/manageCookie"
 import { useLogAuth } from '../context/authContext';
 import { AppContext } from "../App";
-import { BiError } from 'react-icons/bi';
+// import { BiError } from 'react-icons/bi';
 import '../styles/pages/OTP.scss'
 import OTPInput, { ResendOTP } from "otp-input-react";
 import { publicDbApiRequest } from '../requests/requestMethods';
@@ -68,15 +68,12 @@ const OTP = () => {
   const handleFullLogin = async (e) => {
     e.preventDefault()
     try {
-      // const res = await publicRequest.post(`/check/code`,
-      //   { ...data, code: otpValues })
-      // const { access_token, name, telephone } = res.data.data
-      //***Login Request => saving data to db {telephone, name, accesstoken} => generate new access token and
+      //***Auth Request => saving data to db {telephone, name, access_token} => generate new serverAccessToken and
       // save it to the cookies to use it 
-      const response = await publicDbApiRequest.post("/updatedb",
+      const response = await publicDbApiRequest.post("/auth",
         { ...data, code: otpValues })
-      console.log(response)
-      setAuth({ ...response.data.authData })
+      const { telephone, name } = response.data.authData
+      setAuth({ telephone, name })
       /**Canceling saving grabbed token to cookies and instead we fetch it from db with axios interceptors in hooks */
       /**but we save the token henerated by our server and save it to cookies */
       const serverAccessToken = response.data.authData.serverAccessToken;
@@ -85,9 +82,6 @@ const OTP = () => {
         setCookies("serverAccessToken", serverAccessToken, 24 * 60 * 60 * 1000)
       }
       navigate("/userinfo")
-
-      // console.log(res)
-      // console.log(accessToken)
     } catch (error) {
       console.log(error)
     }

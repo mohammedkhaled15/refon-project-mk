@@ -20,7 +20,7 @@ export const publicDbApiRequest = axios.create({
 });
 
 export const privateDbApiRequest = axios.create({
-  baseURL: BASE_URL,
+  baseURL: DB_API_URL,
   headers: {
     "Content-Type": "application/json",
   },

@@ -5,7 +5,7 @@ import { BsFillTelephoneFill } from 'react-icons/bs';
 import '../styles/pages/Login.scss'
 import { publicRequest } from "../requests/requestMethods"
 import { AppContext } from "../App";
-import setCookies from "../utils/manageCookie";
+import { setCookies } from "../utils/manageCookie";
 
 const Login = () => {
   const { setAuth } = useLogAuth();

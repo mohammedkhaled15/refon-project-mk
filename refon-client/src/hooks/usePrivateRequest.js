@@ -1,77 +1,54 @@
 import { useEffect } from "react";
-import { privateRequest, publicDbApiRequest } from "../requests/requestMethods";
+import { privateDbApiRequest } from "../requests/requestMethods";
 import { useNavigate } from "react-router-dom";
 import { useLogAuth } from "../context/authContext";
-import setCookies from "../utils/manageCookie";
+import { setCookies } from "../utils/manageCookie";
 import { getCookies } from "../utils/manageCookie";
 // import axios from "axios";
 
 const usePrivateRequest = () => {
   const { auth, setAuth } = useLogAuth();
   const navigate = useNavigate();
-  // ***Refused Solution to get Access from Cookies
-  // const access_token = document?.cookie?.split("=")[1];
-  // console.log("OldAccessToken:", access_token);
-  /***/
 
-  /**Depend on  cookies in request to presist data */
-  const telephone = getCookies("telephone");
+  const serverAccessToken = getCookies("serverAccessToken");
 
   useEffect(() => {
-    const requestInterceptor = privateRequest.interceptors.request.use(
+    const requestInterceptor = privateDbApiRequest.interceptors.request.use(
       async (config) => {
-        //***Required Solution to get access token from db
-        const atRes = await publicDbApiRequest.post("/getaccess", {
-          telephone,
-        });
-        console.log(atRes);
-        const access_token = atRes.data.access_token;
-        /*****/
         if (!config.headers["Authorization"]) {
-          config.headers["Authorization"] = `Bearer ${access_token}`;
+          config.headers["Authorization"] = `Bearer ${serverAccessToken}`;
         }
         return config;
       },
       (err) => Promise.reject(err)
     );
 
-    const responseInterceptor = privateRequest.interceptors.response.use(
+    const responseInterceptor = privateDbApiRequest.interceptors.response.use(
       (response) => response,
       async (err) => {
         const prevRequest = err?.config;
-        // console.log(err);
         if (err?.response?.status === 401 && !prevRequest?.sent) {
           prevRequest.sent = true;
 
           // 1st senario set access_token cookie to undefined through this request
           // the navigate to login page to obtain a new access token
-          setCookies(null, -1000);
+          setCookies("telephone", null, -1000);
+          setCookies("serverAccessToken", null, -1000);
           setAuth({});
           navigate("/");
           console.log("logging Out");
-
-          // 2nd senario create new jwt and update the db and cokies with it through this request
-          // const res = await axios.post("http://localhost:5000/api/createjwt", {
-          //   ...auth,
-          // });
-          // setAuth({ ...auth, access_token: res.data.access_token });
-          // console.log("NewAccessToken: ", res.data.access_token);
-          // prevRequest.headers[
-          //   "Authorization"
-          // ] = `Bearer ${res.data.access_token}`;
-          // return privateRequest(prevRequest);
         }
         return Promise.reject(err);
       }
     );
 
     return () => {
-      privateRequest.interceptors.request.eject(requestInterceptor);
-      privateRequest.interceptors.response.eject(responseInterceptor);
+      privateDbApiRequest.interceptors.request.eject(requestInterceptor);
+      privateDbApiRequest.interceptors.response.eject(responseInterceptor);
     };
-  }, [auth, navigate, setAuth]);
+  }, [auth, navigate, serverAccessToken, setAuth]);
 
-  return privateRequest;
+  return privateDbApiRequest;
 };
 
 export default usePrivateRequest;

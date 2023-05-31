@@ -1,21 +1,26 @@
 import { useEffect, useState } from "react"
 import usePrivateRequest from "../hooks/usePrivateRequest"
 import { useLocation, useNavigate } from "react-router-dom"
-import { FaUserAlt } from 'react-icons/fa';
+// import { FaUserAlt } from 'react-icons/fa';
 import { MdAlternateEmail } from 'react-icons/md'
-import { GrMail } from 'react-icons/gr';
+// import { GrMail } from 'react-icons/gr';
 import '../styles/pages/UserInfo.scss'
 import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { FaUser, FaBirthdayCake } from 'react-icons/fa'
 import { BsFillTelephoneFill } from 'react-icons/bs'
 import { ImLocation2 } from 'react-icons/im'
+import { useLogAuth } from "../context/authContext"
+import { getCookies } from "../utils/manageCookie"
 
 const UserInfo = () => {
-  const privateRequest = usePrivateRequest()
+  const privateDbApiRequest = usePrivateRequest()
   const [userInfo, setUserInfo] = useState({})
   const navigate = useNavigate()
   const location = useLocation()
+  const { auth } = useLogAuth()
+  const telephone = getCookies("telephone")
+  console.log(auth)
 
   const [expanded, setExpanded] = useState('panel1');
 
@@ -28,7 +33,7 @@ const UserInfo = () => {
     const controller = new AbortController()
     const getUserInfo = async () => {
       try {
-        const res = await privateRequest.post("/user/details", { signal: controller.signal })
+        const res = await privateDbApiRequest.post("/user/info", { signal: controller.signal, telephone })
         isMounted && setUserInfo(res.data.data)
       } catch (error) {
         console.log(error)
@@ -40,7 +45,7 @@ const UserInfo = () => {
       isMounted = false
       controller.abort()
     }
-  }, [location, navigate, privateRequest])
+  }, [location, navigate, privateDbApiRequest])
 
   console.log(userInfo)
 

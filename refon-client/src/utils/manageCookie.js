@@ -10,5 +10,3 @@ export const getCookies = (name) => {
     .find((row) => row.startsWith(`${name}=`))
     ?.split("=")[1];
 };
-
-export default setCookies;
