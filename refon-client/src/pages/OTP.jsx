@@ -67,24 +67,24 @@ const OTP = () => {
   const handleFullLogin = async (e) => {
     e.preventDefault()
     try {
-      const res = await publicRequest.post(`/check/code`,
-        { ...data, code: otpValues })
-      if (res.status === 200) {
-        const { access_token, name, telephone } = res.data.data
-        //***Login Request => saving data to db {telephone, name, accesstoken} => generate new access token and
-        // save it to the cookies to use it 
-        const response = await axios.post("http://localhost:5000/api/updatedb", { access_token, name, telephone })
-        console.log(response)
-        setAuth({ ...response.data.authData })
-        /**Canceling saving grabbed token to cookies and instead we fetch it from db with axios interceptors in hooks */
-        /**but we save the token henerated by our server and save it to cookies */
-        const serverAccessToken = response.data.authData.serverAccessToken;
-        const tokenMatch = document.cookie.match(/serverAccessToken=([^;]+)/);
-        if (!tokenMatch) {
-          setCookies("serverAccessToken", serverAccessToken, 24 * 60 * 60 * 1000)
-        }
-        navigate("/userinfo")
+      // const res = await publicRequest.post(`/check/code`,
+      //   { ...data, code: otpValues })
+      const { access_token, name, telephone } = res.data.data
+      //***Login Request => saving data to db {telephone, name, accesstoken} => generate new access token and
+      // save it to the cookies to use it 
+      const response = await axios.post("http://localhost:5000/api/updatedb",
+        { ...data, code: otpValues, access_token, name })
+      console.log(response)
+      setAuth({ ...response.data.authData })
+      /**Canceling saving grabbed token to cookies and instead we fetch it from db with axios interceptors in hooks */
+      /**but we save the token henerated by our server and save it to cookies */
+      const serverAccessToken = response.data.authData.serverAccessToken;
+      const tokenMatch = document.cookie.match(/serverAccessToken=([^;]+)/);
+      if (!tokenMatch) {
+        setCookies("serverAccessToken", serverAccessToken, 24 * 60 * 60 * 1000)
       }
+      navigate("/userinfo")
+
       // console.log(res)
       // console.log(accessToken)
     } catch (error) {
