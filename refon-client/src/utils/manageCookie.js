@@ -1,7 +1,7 @@
 export const setCookies = (name, payload, expiryDate) => {
   const newDate = new Date();
   newDate.setTime(newDate.getTime() + expiryDate);
-  document.cookie = `${name}=${payload}; expires=${newDate.toUTCString()}; httpOnly: true`;
+  document.cookie = `${name}=${payload}; expires=${newDate.toUTCString()};  secure`;
 };
 
 export const getCookies = (name) => {
