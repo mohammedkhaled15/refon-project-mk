@@ -3,7 +3,7 @@ import { useLogAuth } from "../context/authContext"
 import { useNavigate, useLocation } from 'react-router-dom';
 import { BsFillTelephoneFill } from 'react-icons/bs';
 import '../styles/pages/Login.scss'
-import { publicRequest } from "../requests/requestMethods"
+import { privateDbApiRequest, publicRequest } from "../requests/requestMethods"
 import { AppContext } from "../App";
 import { setCookies } from "../utils/manageCookie";
 
@@ -23,7 +23,7 @@ const Login = () => {
 
     if (isValidNumber) {
       try {
-        const response = await publicRequest.post(`/login`, { telephone: data.telephone })
+        const response = await privateDbApiRequest.post(`/login`, { telephone: data.telephone })
         if (response.status === 200) {
           console.log('API Response:', response);
           setAuth({ phoneNumber: data.telephone });

@@ -1,5 +1,5 @@
 import { useLocation, Navigate, Outlet, useNavigate } from 'react-router-dom';
-import {useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLogAuth } from '../context/authContext';
 
 const ProtectedRoute = () => {
@@ -8,7 +8,7 @@ const ProtectedRoute = () => {
   const navigate = useNavigate();
   const accessToken = document.cookie
     .split('; ')
-    .find((row) => row.startsWith('access_token='))
+    .find((row) => row.startsWith('serverAccessToken='))
     ?.split('=')[1];
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const ProtectedRoute = () => {
       return <Outlet />;
     } else if (location.pathname === '/userinfo' && accessToken) {
       return <Outlet />;
-    } else if (location.pathname === '/userorders' && accessToken){
+    } else if (location.pathname === '/userorders' && accessToken) {
       return <Outlet />;
     } else if (location.pathname.startsWith('/orderDetails/') && accessToken) {
       return <Outlet />;

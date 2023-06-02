@@ -35,13 +35,13 @@ const App = () => {
         <Route path="/otp" element={<OTP />} />
 
         {/* Private Routes */}
-        {/* <Route element={<ProtectedRoute />}> */}
+        <Route element={<ProtectedRoute />}>
         <Route path="/" element={<SharedLayout />}>
           <Route path="/userinfo" element={<UserInfo />} />
           <Route path="/userorders" element={<UserOrders />} />
           <Route path="/orderDetails/:order" element={<OrderDetails />} />
         </Route>
-        {/* </Route> */}
+        </Route>
 
         {/* Catch All Routes */}
         <Route path="*" element={<ErrorPage />} />
