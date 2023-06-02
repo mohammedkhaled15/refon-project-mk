@@ -10,7 +10,7 @@ const UserOrders = () => {
   const privateDbApiRequest = usePrivateRequest()
 
   const [userOrders, setUserOrders] = useState({})
-  const telephone = getCookies("telephone")
+  // const telephone = getCookies("telephone")
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -20,7 +20,7 @@ const UserOrders = () => {
     const Controller = new AbortController()
     const getUserOrders = async () => {
       try {
-        const res = await privateDbApiRequest.post("/orders_list", { list: '1', test: '1', telephone }, { signal: Controller.signal })
+        const res = await privateDbApiRequest.post("/orders_list", { list: '1', test: '1' }, { signal: Controller.signal })
         console.log(res)
         isMounted && setUserOrders(res.data.data.data)
       } catch (error) {
@@ -33,7 +33,7 @@ const UserOrders = () => {
       isMounted = false
       isMounted && Controller.abort()
     }
-  }, [location, navigate, privateDbApiRequest, telephone])
+  }, [location, navigate, privateDbApiRequest])
 
   console.log(userOrders)
 

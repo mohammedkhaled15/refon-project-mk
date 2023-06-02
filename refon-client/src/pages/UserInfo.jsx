@@ -11,7 +11,7 @@ import { FaUser, FaBirthdayCake } from 'react-icons/fa'
 import { BsFillTelephoneFill } from 'react-icons/bs'
 import { ImLocation2 } from 'react-icons/im'
 import { useLogAuth } from "../context/authContext"
-import { getCookies } from "../utils/manageCookie"
+// import { getCookies } from "../utils/manageCookie"
 
 const UserInfo = () => {
   const privateDbApiRequest = usePrivateRequest()
@@ -19,8 +19,7 @@ const UserInfo = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const { auth } = useLogAuth()
-  const telephone = getCookies("telephone")
-  console.log(auth)
+  // const telephone = getCookies("telephone")
 
   const [expanded, setExpanded] = useState('panel1');
 
@@ -33,7 +32,7 @@ const UserInfo = () => {
     const controller = new AbortController()
     const getUserInfo = async () => {
       try {
-        const res = await privateDbApiRequest.post("/user/info", { signal: controller.signal, telephone })
+        const res = await privateDbApiRequest.post("/user/info", { signal: controller.signal })
         isMounted && setUserInfo(res.data.data)
       } catch (error) {
         console.log(error)

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import usePrivateRequest from "../hooks/usePrivateRequest"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import "../styles/pages/OrderDetails.scss"
-import { getCookies } from "../utils/manageCookie"
+// import { getCookies } from "../utils/manageCookie"
 
 const OrderDetails = () => {
 
@@ -14,7 +14,7 @@ const OrderDetails = () => {
   // console.log(track_no)
   const navigate = useNavigate()
   const location = useLocation()
-  const telephone = getCookies("telephone")
+  // const telephone = getCookies("telephone")
 
   useEffect(() => {
     let isMounted = true
@@ -23,7 +23,7 @@ const OrderDetails = () => {
       try {
         const res = await privatDbApieRequest.post("/order_details", {
           test: "",
-          final_tracking_number: track_no.order, telephone
+          final_tracking_number: track_no.order
         }, { signal: Controller.signal })
         isMounted && setOrderDetails(res.data.data)
       } catch (error) {

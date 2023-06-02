@@ -12,11 +12,12 @@ export const privateRequest = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  // withCredentials: true,
+  withCredentials: true,
 });
 
 export const publicDbApiRequest = axios.create({
   baseURL: DB_API_URL,
+  withCredentials: true,
 });
 
 export const privateDbApiRequest = axios.create({
@@ -24,5 +25,5 @@ export const privateDbApiRequest = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  // withCredentials: true,
+  withCredentials: true,
 });

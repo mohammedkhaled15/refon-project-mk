@@ -28,7 +28,7 @@ const Login = () => {
           console.log('API Response:', response);
           setAuth({ phoneNumber: data.telephone });
           navigate('/otp', { state: { telephone: data.telephone } });
-          setCookies("telephone", data.telephone, 24 * 60 * 60 * 1000)
+          // setCookies("telephone", data.telephone, 24 * 60 * 60 * 1000)
         }
 
       } catch (error) {

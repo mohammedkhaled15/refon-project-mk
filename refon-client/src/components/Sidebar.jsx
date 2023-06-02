@@ -6,6 +6,8 @@ import { MdFavorite } from 'react-icons/md';
 import { ImExit } from 'react-icons/im'
 import { BiMenuAltRight } from 'react-icons/bi'
 import "../styles/components/Sidebar.scss"
+import axios from 'axios';
+import { privateDbApiRequest, publicDbApiRequest } from '../requests/requestMethods';
 
 const Sidebar = () => {
 
@@ -42,12 +44,12 @@ const Sidebar = () => {
   const toggle = () => {
     setIsOpen(!isOpen);
   }
-  const handleLogout = (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
-    // Remove the access_token from cookies
+    // Remove the serverAccessToken from cookies
     document.cookie = 'serverAccessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    document.cookie = 'telephone=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 
+    await privateDbApiRequest.post("/logout")
     // Navigate to the login page
     navigate('/');
     window.location.reload();
