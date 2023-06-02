@@ -44,6 +44,7 @@ const Sidebar = () => {
   const toggle = () => {
     setIsOpen(!isOpen);
   }
+
   const handleLogout = async (e) => {
     e.preventDefault();
     // Remove the serverAccessToken from cookies
@@ -56,6 +57,7 @@ const Sidebar = () => {
       window.location.reload();
     }
   };
+
   const imageSize = `${isOpen ? "100px" : "30px"}`;
   const active = `${isOpen ? "active" : ""}`;
 
