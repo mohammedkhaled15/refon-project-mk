@@ -49,7 +49,7 @@ const Sidebar = () => {
     // Remove the serverAccessToken from cookies
     document.cookie = 'serverAccessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 
-    const logoutRes = await privateDbApiRequest.post("/logout")
+    const logoutRes = await axios.post("http://localhost:5000/api/logout", {}, { withCredentials: true })
     if (logoutRes.status === 204) {
       // Navigate to the login page
       navigate('/');
