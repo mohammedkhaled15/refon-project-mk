@@ -49,10 +49,12 @@ const Sidebar = () => {
     // Remove the serverAccessToken from cookies
     document.cookie = 'serverAccessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 
-    await privateDbApiRequest.post("/logout")
-    // Navigate to the login page
-    navigate('/');
-    window.location.reload();
+    const logoutRes = await privateDbApiRequest.post("/logout")
+    if (logoutRes.status === 204) {
+      // Navigate to the login page
+      navigate('/');
+      window.location.reload();
+    }
   };
   const imageSize = `${isOpen ? "100px" : "30px"}`;
   const active = `${isOpen ? "active" : ""}`;
